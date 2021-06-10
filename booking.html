@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>| Cart |</title>
+        <style>
+            #parent>h1 {
+                width: 950vw;
+                text-align: center;
+            }
+
+            #parent {
+                width: 95vw;
+                margin-left: auto;
+                padding: 10px;
+                display: grid;
+                grid-template-columns: 30% 30% 30%;
+                grid-gap: 30px;
+            }
+
+            #parent>div {
+                border-radius: 7px;
+                border: 1px solid black;
+                padding: 10px;
+                box-shadow: 1px 2px gray;
+            }
+
+            #parent>div:hover {
+                border: 2px solid black;
+                border-radius: 7px;
+            }
+
+            #parent>div>img {
+                width: 70%;
+                margin-left: 60px;
+                height: auto;
+            }
+            .bbttnn{
+                width: 30%;
+                background-color: brown;
+                color: white;
+                font-weight: 700;
+                float: right;
+                height: 50px;
+                border: 2px solid black;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <h1 style="text-align: center;">Movies</h1>
+        <div id="parent">
+        </div>
+        <div class="form">
+            <button class="bbttnn" onclick='check()'>Checkout</button>
+        </div>
+    </body>
+
+</html>
+<script>
+
+
+
+    let movie = JSON.parse(localStorage.getItem('cart'))
+    //console.log(movie)
+    let parent = document.getElementById('parent')
+    for (var i = 0; i < movie.length; i++) {
+        let div = document.createElement('div')
+        let name = document.createElement('h4')
+        let poster = document.createElement('img')
+        let time = document.createElement('p')
+        let price = document.createElement('p')
+        let desc = document.createElement('p')
+        name.innerHTML = 'Name : ' + movie[i].name
+        price.innerHTML = 'Price : ' + movie[i].price
+        time.innerHTML = 'Time : ' + movie[i].time
+        desc.innerHTML = 'Description : ' + movie[i].desc
+        desc.style.color = 'gray'
+        poster.src = movie[i].poster
+        let btn = document.createElement('button')
+        btn.textContent = 'Buy Ticket'
+
+        btn.setAttribute('style', "width:100%;cursor:pointer;height:50px;color:white;background-color:brown;font-weight:700;")
+        div.append(poster, name, price, time, desc)
+        parent.append(div)
+    }
+
+    function check() {
+        let cart = JSON.parse(localStorage.getItem('cart'))
+        cart = []
+        localStorage.setItem('cart',JSON.stringify(cart))
+        window.location.href = 'booking.html';
+        let div = document.getElementById('parent')
+        let arr = ['Your booking is in progress', 'Your payment has been received', 'Preparing your ticket', 'Booking Successful']
+        for (var b = 0; b < arr.length; b++) {
+            let p = document.createElement('p')
+            p.innerHTML = arr[b]
+            parent.append(p)
+            setTimeout(function(){
+                parent.remove(p)
+
+            }, 2000)
+        }
+
+    }
+</script>

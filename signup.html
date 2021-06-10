@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>| SIGN-UP |</title>
+    <style>
+        .form{
+            width: 50vw;
+            padding: 10px;
+            box-shadow: 1px 1px gray;
+            margin: auto;
+            border-radius: 7px;
+        }
+        h1{
+            text-align: center;
+        }
+        .form:hover{
+            border: 2px solid black;
+            border-radius: 7px;
+        }
+        input{
+            width: 96%;
+            height: 40px;
+            margin: 5px;
+            border-radius: 5px;
+        }
+        input[type=submit]{
+            margin: 10px;
+            background-color: brown ;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        #alert{
+            font-size: 23px;
+            text-align: center;
+        }
+        button{
+            background-color: cadetblue;
+            width: 100px;
+            border: 2px solid brown;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btnnn{
+            width: 100%;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="form">
+        <h1>Register Form</h1>
+        <label for="name">Name</label>
+        <input type="text" name="" id="name" placeholder="Enter Name" autofocus>
+        <label for="mobile">Mobile</label>
+        <input type="number" name="" id="mobile" placeholder="Enter Mobile Number">
+        <label for="email">Email</label>
+        <input type="email" name="" id="email" placeholder="Enter Email">
+        <label for="pass">Password</label>
+        <input type="password" name="" id="pass" placeholder="Enter Password">
+        <input type="submit" onclick="register()" value="Register">
+    </div>
+    <div class="btnnn"><button onclick="window.location.href = 'index.html'">Back</button></div>
+    <div id="alert"></div>
+</body>
+</html>
+
+<script>
+    function register(){
+        let name = document.getElementById('name').value
+        let mobile = document.getElementById('mobile').value
+        let email = document.getElementById('email').value
+        let password = document.getElementById('pass').value
+        if(!email || ! password || !mobile || !name){
+            let alert = document.getElementById('alert')
+            let p = document.createElement('p')
+            p.innerHTML = 'Empty Fields Are Not Allowed'
+            p.style.color = 'red'
+            alert.append(p)
+            setTimeout(function(){alert.remove(p)},2000)
+        }else{
+            user = {name,email,mobile,password};
+            let users = localStorage.getItem('users')
+            if(users == null)
+                users = []
+            else
+                users = JSON.parse(localStorage.getItem('users'))
+            let found = false
+            for(var i=0;i<users.length;i++){
+                if(users[i].email == user.email){
+                    found =true
+                    break;
+                }
+            }
+            if(found){
+                let alert = document.getElementById('alert')
+                let p = document.createElement('p')
+                p.innerHTML = 'User Already Registered'
+                p.style.color = 'red'
+                alert.append(p)
+                setTimeout(function () { alert.remove(p) }, 2000)
+            }else{
+                users.push(user)
+                localStorage.setItem('users', JSON.stringify(users))
+                let alert = document.getElementById('alert')
+                let p = document.createElement('p')
+                p.innerHTML = 'User Registered Successfully'
+                p.style.color = 'green'
+                alert.append(p)
+                setTimeout(function () { alert.remove(p) }, 2000)
+            }
+        }
+    }
+
+</script>
